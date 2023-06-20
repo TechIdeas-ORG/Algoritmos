@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Quantidade de cavalos<input type="text" id="ipt_cavalos">
+    <button onclick="Comecar()">Dar largada</button>
+    <div id="dv_corrida"></div>
+</body>
+
+</html>
+<script>
+
+
+    var ax_
+    var vt_cavalos = []
+    var qnt_cavalos = 0
+
+
+    function Comecar() {
+        var ax_cavalo = Number(ipt_cavalos.value);
+        if (ax_cavalo > 0) {
+            qnt_cavalos = ax_cavalo
+            for (let i = 0; i < qnt_cavalos; i++) { 
+                vt_cavalos.push(0)
+            }
+            for (let i = 0; i < 7; i++) {
+                dv_corrida.innerHTML += `<u>Volta ${i + 1}</u> <br>`
+                for (let qtd = 0; qtd < qnt_cavalos; qtd++) {
+                    let tempo = Number((Math.random() * 2 + 7).toFixed(1))
+                    vt_cavalos[qtd] += tempo;
+                    
+                    dv_corrida.innerHTML += `Cavalo ${qtd+1} - ${tempo.toFixed(2)} -- ${vt_cavalos[qtd].toFixed(2)}  -- `
+                }
+                dv_corrida.innerHTML += "<br><br>"
+            }
+        }
+        else {
+            alert("quantidade invalida")
+        }
+
+
+
+    }
+</script>
