@@ -5,46 +5,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        *{
+            color: #647135;
+        }
+
+        input{
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        button{
+            border: solid 3px #8d721d;
+            background-color: #ffd966;
+            color: #8d721d;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: center;
+            
+        }
+
+        .container{
+            width: 50%;
+            
+            padding: 20px;
+        }
+        
+        #cavalinhosContainer {
+            min-height: 50vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 100px;
+        }
+
+        #cavalinhosContainer div{
+            gap: 50px;
+            
+            align-items: flex-end;
+        }
+
+        .cavalinho-container{
+            background-color: #a54343;
+
+            width: 50px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
+            color: black;
+            font-weight: bold;
+        }
+
+        .cavalinho-container span{
+            position: absolute;
+            text-align: center;
+            text-wrap: nowrap;
+            top: 100%;
+        }
+
+        .cavalinho-container img{
+            position: absolute;
+
+            bottom: 100%;
+
+            width: 50px;
+            height: 50px;
+        }
+    </style>
 </head>
 
-<body>
-    Quantidade de cavalos<input type="text" id="ipt_cavalos">
-    <button onclick="Comecar()">Dar largada</button>
-    <div id="dv_corrida"></div>
+<body class="flex">
+    <div class="container">
+        Quantidade de cavalos<input type="text" id="ipt_cavalos"><br>
+        <span>Turfe Amigo</span><br>
+        <button onclick="Comecar()">Dar largada</button>
+        <div id="dv_corrida"></div>
+    </div>
+
+    <div class="container" id="cavalinhosContainer">
+        <h1>Pódio</h1>
+    </div>
 </body>
 
 </html>
 <script>
 
-
-    var ax_
-    var vt_cavalos = []
-    var qnt_cavalos = 0
+    var vt_cavalos = [];
+    var qnt_cavalos = 0;
 
 
     function Comecar() {
+        vt_cavalos = [];
+        dv_corrida.innerHTML += "<br><br>";
+
         var ax_cavalo = Number(ipt_cavalos.value);
         if (ax_cavalo > 0) {
             qnt_cavalos = ax_cavalo
             for (let i = 0; i < qnt_cavalos; i++) { 
-                vt_cavalos.push(0)
+                vt_cavalos.push({
+                    nome: `Cavalo ${i+1}`,
+                    tempo: 0
+                })
             }
             for (let i = 0; i < 7; i++) {
                 dv_corrida.innerHTML += `<u>Volta ${i + 1}</u> <br>`
                 for (let qtd = 0; qtd < qnt_cavalos; qtd++) {
                     let tempo = Number((Math.random() * 2 + 7).toFixed(1))
-                    vt_cavalos[qtd] += tempo;
+                    vt_cavalos[qtd]['tempo'] += tempo;
                     
-                    dv_corrida.innerHTML += `Cavalo ${qtd+1} - ${tempo.toFixed(2)} -- ${vt_cavalos[qtd].toFixed(2)}  -- `
+                    dv_corrida.innerHTML += `Cavalo ${qtd+1} - ${tempo.toFixed(2)} -- ${vt_cavalos[qtd]['tempo'].toFixed(2)}  -- `
                 }
                 dv_corrida.innerHTML += "<br><br>"
             }
+
+            podium()
         }
         else {
             alert("quantidade invalida")
         }
 
-
-
     }
+
+    function podium(){
+        for(let i = 0; i < vt_cavalos.length; i++){
+            for(let j = 0; j < vt_cavalos.length; j++){
+                if(vt_cavalos[i].tempo < vt_cavalos[j].tempo){
+                    let menor = vt_cavalos[i];
+                    let maior = vt_cavalos[j];
+
+                    vt_cavalos[j] = menor;
+                    vt_cavalos[i] = maior;
+                }
+            }
+        }
+        var html = "<div class='flex'>";
+        for(let i = 0; i < vt_cavalos.length; i++){
+            html += `
+                <div class="cavalinho-container" style="height: ${vt_cavalos[i].tempo*2}px">
+                    <img src="https://static.vecteezy.com/system/resources/previews/019/045/711/non_2x/horse-graphic-clipart-design-free-png.png">
+                    ${vt_cavalos[i].tempo.toFixed(1)}
+                    <span>${vt_cavalos[i].nome}<br>${i+1}° Lugar</span>
+                </div>
+            `;
+        }
+        html += "</div>";
+
+        cavalinhosContainer.innerHTML += html;
+
+
+        console.log(vt_cavalos)
+    }
+
+
 </script>
