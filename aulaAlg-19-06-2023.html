@@ -5,46 +5,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .run-cavalinhos-main {
+            width: auto;
+            height: 100vh;
+
+        }
+
+        .run-cavalinhos {
+            transition: 500ms;
+        }
+
+        .run-cavalinhos div {
+            height: 70px;
+            position: absolute;
+
+        }
+
+
+        .run-cavalinhos img {
+            width: 100px;
+            position: relative;
+            left: 0px;
+        }
+        #imagem1,#imagem2,#imagem3{
+            height: 100px;
+        }
+        #cavalinhosContainer{
+            display: flex;
+            height: 400px;
+        }
+        input{
+            padding: 10px;
+            border-radius: 33px;
+        }
+        button{
+            padding: 10px;
+            border-radius: 10%;
+        }
+        body{
+            margin: 0;
+            background: lightblue;
+            background-size: cover;
+        }
+    </style>
 </head>
 
 <body>
-    Quantidade de cavalos<input type="text" id="ipt_cavalos">
-    <button onclick="Comecar()">Dar largada</button>
+
+    <div id="quant_div">
+        Quantidade de cavalos:<br><input id="ipt_cavalos"><br>
+        Quantidade de voltas:<br> <input id="ipt_voltas"><br><br>
+        <button onclick="mostrarCards()">NEXT</button><br><br>
+    </div>
+
+    <div id="dv_cadCavalos" style="display: flex;flex-wrap: wrap;"></div>
     <div id="dv_corrida"></div>
+    <div class="run-cavalinhos-main" id="mainCavalinhos" style="display: none;">
+        <div class="run-cavalinhos" id="div_cavalosContainer">
+
+        </div>
+    </div>
+    <div id="cavalinhosContainer"></div>
+
 </body>
 
 </html>
 <script>
+    var vencedor = -1;
+    var top2 = -1;
+    var top3 = -1;
+    var vt_cavalos = [{
+        nome: "",
+        tempo: 0,
 
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Muybridge_race_horse_~_big_transp.gif"
+    },
+    {
+        nome: "",
+        tempo: 0,
 
-    var ax_
-    var vt_cavalos = []
+        imagem: "https://usagif.com/wp-content/uploads/gifs/gif-horse-122.gif"
+    },
+    {
+        nome: "",
+        tempo: 0,
+
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Muybridge_race_horse_~_big_transp.gif"
+    },
+    {
+        nome: "",
+        tempo: 0,
+
+        imagem: "https://usagif.com/wp-content/uploads/gifs/gif-horse-122.gif"
+    },
+    {
+        nome: "",
+        tempo: 0,
+
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Muybridge_race_horse_~_big_transp.gif"
+    },
+    {
+        nome: "",
+        tempo: 0,
+
+        imagem: "https://usagif.com/wp-content/uploads/gifs/gif-horse-122.gif"
+    },
+    {
+        nome: "",
+        tempo: 0,
+
+        imagem: "https://media.tenor.com/S62bQ146fOEAAAAM/getty-up-horse.gif"
+    }
+    ]
     var qnt_cavalos = 0
+
+    function mostrarCards() {
+        qnt_cavalos = Number(ipt_cavalos.value);
+        if (qnt_cavalos > 6 || qnt_cavalos < 3) {
+            alert("Quantidade inválida");
+        } else {
+            dv_cadCavalos.innerHTML = ""
+            for (let i = 0; i < qnt_cavalos; i++) {
+                dv_cadCavalos.innerHTML += `<div style="border: 1px solid black;">
+                        <input type="text" placeholder="Nome" id="nomeCavalo${i}">
+                        <h2>21/06/2023</h2>
+                        <h3>R$ 30,00</h3>
+                        </div>`;
+                // if(nomeCavalo != NaN || nomeCavalo.length <= 2){
+                //     alert(`Digite um nome válido!`);
+                //ARRUMAR!!!! }
+
+            }
+            dv_cadCavalos.innerHTML += `<br><br><button onclick='Comecar()'>Começar corrida</button>`
+        }
+    }
 
 
     function Comecar() {
-        var ax_cavalo = Number(ipt_cavalos.value);
-        if (ax_cavalo > 0) {
-            qnt_cavalos = ax_cavalo
-            for (let i = 0; i < qnt_cavalos; i++) { 
-                vt_cavalos.push(0)
-            }
-            for (let i = 0; i < 7; i++) {
-                dv_corrida.innerHTML += `<u>Volta ${i + 1}</u> <br>`
-                for (let qtd = 0; qtd < qnt_cavalos; qtd++) {
-                    let tempo = Number((Math.random() * 2 + 7).toFixed(1))
-                    vt_cavalos[qtd] += tempo;
-                    
-                    dv_corrida.innerHTML += `Cavalo ${qtd+1} - ${tempo.toFixed(2)} -- ${vt_cavalos[qtd].toFixed(2)}  -- `
+        mainCavalinhos.style.display = 'block';
+        quant_div.style.display = 'none';
+        dv_cadCavalos.style.display = 'none';
+        var voltas = ipt_voltas.value;
+
+        if (voltas < 1) {
+            alert(`As voltas deve ser maior que 1`);
+        }
+        for (var i = 0; i < qnt_cavalos; i++) {
+            vt_cavalos[i].nome = document.getElementById(`nomeCavalo${i}`).value;
+            div_cavalosContainer.innerHTML += `<div style="top: ${120 * (i + 1)}px" id='cavalinho${i}'><img src='${vt_cavalos[i].imagem}'><br>${vt_cavalos[i].nome}</div>`
+
+        }
+        console.log(vt_cavalos)
+        var count = 1;
+        var Corrida = setInterval(() => {
+            dv_corrida.innerHTML = `<u>Volta ${count}</u> <br>`
+            if (count == voltas) {
+                clearInterval(Corrida);
+                mainCavalinhos.style.display = 'none';
+                dv_corrida.style.display = 'none';
+                for (let i = 0; i < qnt_cavalos; i++) {
+                    var quantidade = 0;
+                    for (var j = 0; j < qnt_cavalos; j++) {
+                        if (vt_cavalos[i].tempo < vt_cavalos[j].tempo) {
+                            quantidade++;
+                        }
+                    }
+                    if (quantidade == qnt_cavalos - 1) {
+                        vencedor = i;
+                    }
+                    else if (quantidade == qnt_cavalos - 2) {
+                        top2 = i;
+                    } else if (quantidade == qnt_cavalos - 3) {
+                        top3 = i;
+                    }
                 }
-                dv_corrida.innerHTML += "<br><br>"
+                podium(vencedor, top2, top3)
+            } else {
+                count++;
             }
-        }
-        else {
-            alert("quantidade invalida")
-        }
+
+            var screnWidth = window.innerWidth; //LARGURA DA TELA
+            for (let qtd = 0; qtd < qnt_cavalos; qtd++) {
+                let tempo = Number((Math.random() * 2 + 7).toFixed(1))
+                vt_cavalos[qtd]['tempo'] += tempo;
+
+                var cavalo = document.getElementById(`cavalinho${qtd}`);
+
+                cavalo.style.right = screnWidth - ((vt_cavalos[qtd]['tempo'] * 2) * voltas) + 'px';
+                // window.scrollBy((vt_cavalos[qtd]['tempo'] * 2), 0)
 
 
+            }
+            dv_corrida.innerHTML += "<br><br>";
+            
+        }, 300);
+    }
 
+    function podium(venc, venc2, venc3) {
+
+        var html = "<div style ='display:flex'>";
+
+        html += `
+                <div class="cavalinho-container" style= "height: ${(vt_cavalos.tempo[venc] * 2)}px;"  "margin-right:12px;">
+                    <img style='heigth: 100px' id='imagem1' src="https://static.vecteezy.com/system/resources/previews/019/045/711/non_2x/horse-graphic-clipart-design-free-png.png">
+                    <br>${vt_cavalos.tempo[venc].toFixed(1)}
+                    <span>${vt_cavalos.nome[venc]}<br>1° Lugar</span>
+                    <div id='primeiroLugar'style="height:${vt_cavalos.tempo[venc]*3}; width: 100px; background-color: green; "></div>
+                </div>
+                <div class="cavalinho-container" style="height: ${vt_cavalos.tempo[venc2] * 2}px; margin-right:12px">
+                    <img style='heigth: 100px' id='imagem2' src="https://static.vecteezy.com/system/resources/previews/019/045/711/non_2x/horse-graphic-clipart-design-free-png.png">
+                    <br>${vt_cavalos.tempo[venc2].toFixed(1)}
+                    <span>${vt_cavalos.nome[venc2]}<br>2° Lugar</span>
+                    <div id='segundoLugar' style="height:${vt_cavalos.tempo[venc2]*2}; width: 100px; background-color: green; "></div>
+                </div>
+                <div class="cavalinho-container" style="height: ${vt_cavalos.tempo[venc3] * 2}px">
+                    <img style='heigth: 100px' id='imagem3' src="https://static.vecteezy.com/system/resources/previews/019/045/711/non_2x/horse-graphic-clipart-design-free-png.png">
+                    <br>${vt_cavalos.tempo[venc3].toFixed(1)}
+                    <span>${vt_cavalos.nome[venc3]}<br>3° Lugar</span>
+                    <div id='terceiroLugar' style="height:${vt_cavalos.tempo[venc3]}; width: 100px; background-color: green; "></div>
+                </div>
+            `;
+
+        html += "</div>";
+
+        cavalinhosContainer.innerHTML += html;
+        document['body'].style.height = '100vh';
+        document['body'].style.display = 'flex';
+        document['body'].style.justifyContent = 'center';
+        document['body'].style.alignItems = 'center';
     }
 </script>
