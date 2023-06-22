@@ -1,0 +1,42 @@
+.run-cavalinhos-main {
+    width: auto;
+    height: 100vh;
+
+}
+
+.run-cavalinhos {
+    transition: 500ms;
+}
+
+.run-cavalinhos div {
+    height: 70px;
+    position: absolute;
+
+}
+
+
+.run-cavalinhos img {
+    width: 100px;
+    position: relative;
+    left: 0px;
+}
+#imagem1,#imagem2,#imagem3{
+    height: 100px;
+}
+#cavalinhosContainer{
+    display: flex;
+    height: 400px;
+}
+input{
+    padding: 10px;
+    border-radius: 33px;
+}
+button{
+    padding: 10px;
+    border-radius: 10%;
+}
+body{
+    margin: 0;
+    background: lightblue;
+    background-size: cover;
+}
