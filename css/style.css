@@ -1,22 +1,21 @@
 .run-cavalinhos-main {
     width: auto;
     height: 100vh;
-
-}
-
-.run-cavalinhos {
-    transition: 500ms;
+    position: absolute;
+    top: 40%;
 }
 
 .run-cavalinhos div {
     height: 70px;
     position: absolute;
-
+    color: white;
+    font-weight: 900;
+    font-size: larger;
 }
 
 
 .run-cavalinhos img {
-    width: 100px;
+    width: 20vw;
     position: relative;
     left: 0px;
 }
@@ -37,12 +36,44 @@ button{
 }
 body{
     margin: 0;
-    background: lightblue;
+    background-image: url("https://www.cavaloatleta.com.br/wp-content/uploads/2015/04/wallpapers-de-corridas-de-cavalos.jpg");
     background-size: cover;
+    height: 100vh;
 }
 .uVoltas{
-    width: 10%;
+    width: 100px;
     margin: auto;
     font-size: 30px;
-    
+}
+
+
+#quant_div{
+    width: 15%;
+    height: 400px;
+    border-radius: 10px;
+    border: 3px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 40px;
+    margin: auto;
+    margin-top: 15%;
+    background-color: white;
+}
+
+#dv_cadCavalos{
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+#dv_cadCavalos div{
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#dv_cadCavalos button{
+  padding: 10px;
 }
