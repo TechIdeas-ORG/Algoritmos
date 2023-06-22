@@ -116,7 +116,7 @@
         console.log(vt_cavalos)
         var count = 1;
         var Corrida = setInterval(() => {
-            dv_corrida.innerHTML = `<u>Volta ${count}</u> <br>`
+            dv_corrida.innerHTML = `<u class='uVoltas'>Volta ${count}</u> <br>`
             if (count == voltas) {
                 clearInterval(Corrida);
                 mainCavalinhos.style.display = 'none';
@@ -137,6 +137,52 @@
                         top3 = i;
                     }
                 }
+                if (vencedor == -1) {
+                    for (let i = 0; i < qnt_cavalos; i++) {
+                        var quantidade = 0;
+                        for (var j = 0; j < qnt_cavalos; j++) {
+                            if (vt_cavalos[i].tempo < vt_cavalos[j].tempo) {
+                                quantidade++;
+                            }
+                        }
+                        if (quantidade == qnt_cavalos - 2) {
+                            vencedor = i;
+                        }
+                        else if (quantidade == qnt_cavalos - 3) {
+                            top2 = i;
+                        } else if (quantidade == qnt_cavalos - 4) {
+                            top3 = i;
+                        }
+                    }
+                }
+                if (top2 == -1) {
+                    for (let i = 0; i < qnt_cavalos; i++) {
+                        var quantidade = 0;
+                        for (var j = 0; j < qnt_cavalos; j++) {
+                            if (vt_cavalos[i].tempo < vt_cavalos[j].tempo) {
+                                quantidade++;
+                            }
+                        }
+                        if (quantidade == qnt_cavalos - 3) {
+                            top2 = i;
+                        } else if (quantidade == qnt_cavalos - 4) {
+                            top3 = i;
+                        }
+                    }
+                }
+                if (top3 == -1) {
+                    for (let i = 0; i < qnt_cavalos; i++) {
+                        var quantidade = 0;
+                        for (var j = 0; j < qnt_cavalos; j++) {
+                            if (vt_cavalos[i].tempo < vt_cavalos[j].tempo) {
+                                quantidade++;
+                            }
+                        }
+                        if (quantidade == qnt_cavalos - 4) {
+                            top3 = i;
+                        }
+                    }
+                }
                 podium(vencedor, top2, top3)
             } else {
                 count++;
@@ -155,32 +201,32 @@
 
             }
             dv_corrida.innerHTML += "<br><br>";
-            
+
         }, 300);
     }
 
     function podium(venc, venc2, venc3) {
 
         var html = "<div style ='display:flex'>";
-       
+
         html += `
                 <div class="cavalinho-container" style= "height: ${(vt_cavalos[venc].tempo * 2)}px;"  "margin-right:12px;">
                     <img style='heigth: 100px' id='imagem1' src="https://static.vecteezy.com/system/resources/previews/019/045/711/non_2x/horse-graphic-clipart-design-free-png.png">
                     <br>${vt_cavalos[venc].tempo.toFixed(1)}
                     <span>${vt_cavalos[venc].nome}<br>1° Lugar</span>
-                    <div id='primeiroLugar'style="height:${vt_cavalos[venc].tempo*3}; width: 100px; background-color: green; "></div>
+                    <div id='primeiroLugar'style="height:${vt_cavalos[venc].tempo * 3}px; width: 100px; max-height: 300px; background-color: green; max-heigth: 220px;"></div>
                 </div>
                 <div class="cavalinho-container" style="height: ${vt_cavalos[venc2].tempo * 2}px; margin-right:12px">
                     <img style='heigth: 100px' id='imagem2' src="https://static.vecteezy.com/system/resources/previews/019/045/711/non_2x/horse-graphic-clipart-design-free-png.png">
                     <br>${vt_cavalos[venc2].tempo.toFixed(1)}
                     <span>${vt_cavalos[venc2].nome}<br>2° Lugar</span>
-                    <div id='segundoLugar' style="height:${vt_cavalos[venc2].tempo*2}; width: 100px; background-color: green; "></div>
+                    <div id='segundoLugar' style="height:${vt_cavalos[venc2].tempo * 2}px; width: 100px; max-height: 210px; background-color: green; "></div>
                 </div>
                 <div class="cavalinho-container" style="height: ${vt_cavalos[venc3].tempo * 2}px">
                     <img style='heigth: 100px' id='imagem3' src="https://static.vecteezy.com/system/resources/previews/019/045/711/non_2x/horse-graphic-clipart-design-free-png.png">
                     <br>${vt_cavalos[venc3].tempo.toFixed(1)}
                     <span>${vt_cavalos[venc3].nome}<br>3° Lugar</span>
-                    <div id='terceiroLugar' style="height:${vt_cavalos[venc3].tempo}; width: 100px; background-color: green; "></div>
+                    <div id='terceiroLugar' style="height:${vt_cavalos[venc3].tempo * 1.5}px; width: 100px; max-height: 100px; background-color: green; left:-20px;"></div>
                 </div>
             `;
 
